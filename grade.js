@@ -1,49 +1,45 @@
+const { showTodos } = require("./command/showTodos");
+const { addTodos } = require("./command/addTodos");
+const { deleteTodos } = require("./command/deleteTodos");
+const { updateTodos } = require("./command/updateTodos");
 const { todos } = require("./todo");
-
 const readline = require("readline");
+
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
 function main() {
-  let input = [];
-  console.log(todos);
+  Input();
+}
 
-  process.stdout.write("명령하세요: ");
-  rl.on("line", (line) => {
-    input = line.split("$").map((el) => el);
-    if (input[0] === "show") {
-      show(input[1]);
+let todosData = [...todos];
+
+function Input() {
+  rl.question("명령하세요 : ", (command) => {
+    const inputArray = command.split("$");
+    const cmd = inputArray[0];
+
+    if (cmd === "show") {
+      const status = inputArray[1];
+      showTodos(status, todosData);
+    } else if (cmd === "add") {
+      todosData = addTodos(todosData, inputArray);
+    } else if (cmd === "delete") {
+      const id = inputArray[1];
+      todosData = deleteTodos(todosData, id);
+      console.log(todosData);
+    } else if (cmd === "update") {
+      const id = inputArray[1];
+      const status = inputArray[2];
+      todosData = updateTodos(todosData, id, status);
+      console.log(todosData);
+    } else {
     }
-    console.log(input);
-    rl.close();
+
+    Input();
   });
-}
-
-function show(status) {
-  // status: 'all', 'todo', 'doing', 'done'
-  const todoArray = todos.filter((obj) => obj.status === "todo");
-  const doingArray = todos.filter((obj) => obj.status === "doing");
-  const doneArray = todos.filter((obj) => obj.status === "done");
-
-  const todoCount = todoArray.length;
-  const doingCount = doingArray.length;
-  const doneCount = doneArray.length;
-  const allCount = todoCount + doingCount + doneCount;
-
-  if (status === "all") {
-    print();
-  } else if (status === "todo") {
-  } else if (status === "doing") {
-  } else if (status === "done") {
-  } else {
-    console.log("예외처리");
-  }
-}
-
-function print(MSG) {
-  console.log(MSG);
 }
 
 main();

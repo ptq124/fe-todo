@@ -8,6 +8,12 @@ const todos = [
     id: 12123123,
   },
   {
+    name: "파이썬 완전 정복",
+    tags: ["programming", "python"],
+    status: "todo",
+    id: 124,
+  },
+  {
     name: " 그림 그리기",
     tags: ["picture", "favorite"],
     status: "doing",
