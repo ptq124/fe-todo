@@ -2,7 +2,9 @@ const { showTodos } = require("./command/showTodos");
 const { addTodos } = require("./command/addTodos");
 const { deleteTodos } = require("./command/deleteTodos");
 const { updateTodos } = require("./command/updateTodos");
+const { 현재상태출력 } = require("./utils/util");
 const { todos } = require("./todo");
+
 const readline = require("readline");
 
 const rl = readline.createInterface({
@@ -10,36 +12,33 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-function main() {
-  Input();
-}
-
 let todosData = [...todos];
 
 function Input() {
   rl.question("명령하세요 : ", (command) => {
-    const inputArray = command.split("$");
-    const cmd = inputArray[0];
+    const [cmd] = command.split("$");
 
     if (cmd === "show") {
-      const status = inputArray[1];
+      const [, status] = command.split("$");
       showTodos(status, todosData);
     } else if (cmd === "add") {
-      todosData = addTodos(todosData, inputArray);
+      const [, subject, tags, status] = command.split("$");
+      todosData = addTodos(todosData, subject, tags, status);
+      현재상태출력(todosData);
     } else if (cmd === "delete") {
-      const id = inputArray[1];
+      const [, id] = command.split("$");
       todosData = deleteTodos(todosData, id);
-      console.log(todosData);
+      현재상태출력(todosData);
     } else if (cmd === "update") {
-      const id = inputArray[1];
-      const status = inputArray[2];
+      const [, id, status] = command.split("$");
       todosData = updateTodos(todosData, id, status);
-      console.log(todosData);
+      현재상태출력(todosData);
     } else {
+      rl.close();
     }
 
     Input();
   });
 }
 
-main();
+Input();

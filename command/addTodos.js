@@ -1,28 +1,27 @@
-function addTodos(todosData, inputArray) {
-  const subject = inputArray[1];
-  const tags = inputArray[2];
-  const tagsList = tagsArray(tags);
-  const status = inputArray[3] ? inputArray[3] : "todo";
-  const addData = {
+const { tagsToArray, makeRandomId } = require("../utils/util");
+
+function addTodos(todosData, subject, tags, status) {
+  const tagsList = tagsToArray(tags);
+  const newTodoData = {
     name: subject,
     tags: tagsList,
-    status: status,
-    id: Math.floor(Math.random() * 100001),
+    status: status || "todo",
+    id: makeRandomId(),
   };
-  //   todosData = [...todosData, addData];
-  const result = todosData.reduce(
+
+  const updateTodosDatas = todosData.reduce(
     (acc, cur) => {
       acc.push(cur);
       return acc;
     },
-    [addData]
+    [newTodoData]
   );
-  return result;
-}
+  // study-javascript 1개가 추가됐습니다.(id : 7788)
+  console.log(
+    `${newTodoData.name} 1개가 추가됐습니다. (id : ${newTodoData.id})`
+  );
 
-function tagsArray(tags) {
-  // ['favorite', 'like'] -> 'favorite', 'like'
-  return tags.substring(1, tags.length - 1).split(",");
+  return updateTodosDatas;
 }
 
 module.exports = { addTodos };

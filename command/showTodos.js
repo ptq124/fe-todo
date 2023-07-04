@@ -1,5 +1,5 @@
 function showTodos(status, todosData) {
-  status: "all", "todo", "doing", "done";
+  // status: "all", "todo", "doing", "done";
   const todoArray = todosData.filter((obj) => obj.status === "todo");
   const doingArray = todosData.filter((obj) => obj.status === "doing");
   const doneArray = todosData.filter((obj) => obj.status === "done");
@@ -7,7 +7,6 @@ function showTodos(status, todosData) {
   const todoCount = todoArray.length;
   const doingCount = doingArray.length;
   const doneCount = doneArray.length;
-  const allCount = todoCount + doingCount + doneCount;
 
   let showString = "";
   if (status === "all") {
