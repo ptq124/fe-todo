@@ -1,3 +1,5 @@
+import { 현재상태출력, 상태리스트출력 } from "../utils/todoPrint.js";
+
 function showTodos(status, todosData) {
   // status: "all", "todo", "doing", "done";
   const todoArray = todosData.filter((obj) => obj.status === "todo");
@@ -8,32 +10,11 @@ function showTodos(status, todosData) {
   const doingCount = doingArray.length;
   const doneCount = doneArray.length;
 
-  let showString = "";
-  if (status === "all") {
-    console.log(
-      `현재상태 : todo: ${todoCount}개, doing:${doingCount}개, done:${doneCount}개`
-    );
-  } else if (status === "todo") {
-    showString = todoArray
-      .map((obj) => [obj.name, obj.id])
-      .map((d) => `'${d[0]}, ${d[1]}'`)
-      .join(", ");
-    console.log(`${status}리스트 : 총${todoCount}건 : ${showString}`);
-  } else if (status === "doing") {
-    showString = doingArray
-      .map((obj) => [obj.name, obj.id])
-      .map((d) => `'${d[0]}, ${d[1]}'`)
-      .join(", ");
-    console.log(`${status}리스트 : 총${doingCount}건 : ${showString}`);
-  } else if (status === "done") {
-    showString = doneArray
-      .map((obj) => [obj.name, obj.id])
-      .map((d) => `'${d[0]}, ${d[1]}'`)
-      .join(", ");
-    console.log(`${status}리스트 : 총${doneCount}건 : ${showString}`);
-  } else {
-    console.log("예외처리");
-  }
+  if (status === "all") 현재상태출력(todosData);
+  else if (status === "todo") 상태리스트출력(status, todoCount, todoArray);
+  else if (status === "doing") 상태리스트출력(status, doingCount, doingArray);
+  else if (status === "done") 상태리스트출력(status, doneCount, doneArray);
+  else console.log("잘못된 입력");
 }
 
-module.exports = { showTodos };
+export { showTodos };
