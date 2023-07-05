@@ -21,4 +21,4 @@ const todos = [
   },
 ];
 
-module.exports = { todos };
+export { todos };
