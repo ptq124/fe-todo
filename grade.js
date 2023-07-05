@@ -44,11 +44,15 @@ function Input() {
         break;
       }
       default: {
-        console.log("잘못된 명령어 입력입니다.");
         rl.close();
       }
     }
     Input();
+  });
+
+  rl.on("close", () => {
+    console.log("잘못된 명령어 입력입니다.");
+    process.exit();
   });
 }
 
