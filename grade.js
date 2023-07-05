@@ -19,26 +19,35 @@ function Input() {
   rl.question("명령하세요 : ", (command) => {
     const [cmd] = command.split("$");
 
-    if (소문자변경(cmd) === "show") {
-      const [, status] = command.split("$");
-      showTodos(status, TODOS_DATA);
-    } else if (소문자변경(cmd) === "add") {
-      const [, name, tags, status] = command.split("$");
-      TODOS_DATA = addTodos(TODOS_DATA, name, tags, status);
-      현재상태출력(TODOS_DATA);
-    } else if (소문자변경(cmd) === "delete") {
-      const [, id] = command.split("$");
-      TODOS_DATA = deleteTodos(TODOS_DATA, Number(id));
-      현재상태출력(TODOS_DATA);
-    } else if (소문자변경(cmd) === "update") {
-      const [, id, status] = command.split("$");
-      TODOS_DATA = updateTodos(TODOS_DATA, Number(id), status);
-      현재상태출력(TODOS_DATA);
-    } else {
-      console.log("잘못된 명령어 입력입니다.");
-      rl.close();
+    switch (소문자변경(cmd)) {
+      case "show": {
+        const [, status] = command.split("$");
+        showTodos(status, TODOS_DATA);
+        break;
+      }
+      case "add": {
+        const [, name, tags, status] = command.split("$");
+        TODOS_DATA = addTodos(TODOS_DATA, name, tags, status);
+        현재상태출력(TODOS_DATA);
+        break;
+      }
+      case "delete": {
+        const [, id] = command.split("$");
+        TODOS_DATA = deleteTodos(TODOS_DATA, Number(id));
+        현재상태출력(TODOS_DATA);
+        break;
+      }
+      case "update": {
+        const [, id, status] = command.split("$");
+        TODOS_DATA = updateTodos(TODOS_DATA, Number(id), status);
+        현재상태출력(TODOS_DATA);
+        break;
+      }
+      default: {
+        console.log("잘못된 명령어 입력입니다.");
+        rl.close();
+      }
     }
-
     Input();
   });
 }
